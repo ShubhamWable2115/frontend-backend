@@ -1,4 +1,6 @@
 import express from "express";
+import cors from "cors";  
+
 
 const app = express();
  const products = [
@@ -54,18 +56,23 @@ const app = express();
   }
 ]
 
+app.use(express.static('dist'));
+
+
+
+app.use(cors());
 app.get('/' , (req,res)=>{
     res.send('server is ready')
 })
 
 // get a list of products
-app.get('/products' , (req,res)=>{
+app.get('/api/products' , (req,res)=>{
    
 
  res.send(products);
 })
 
-app.get('/products/:id', (req,res)=>{
+app.get('/api/products/:id', (req,res)=>{
     const id = Number(req.params.id);
     const productwithid = products.find((p)=>p.id === id);
     if (productwithid){
